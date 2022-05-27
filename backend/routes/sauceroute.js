@@ -5,9 +5,9 @@ const auth = require('../middelware/authuser')
 const multer = require('../middelware/multerconfig')
 
 
-router.get('/', auth, sauceCtrl.getAllSauce);
+router.get('/:id', auth, sauceCtrl.getAllSauce);
 router.get('/', auth, sauceCtrl.getOneSauce);
-router.post('/:id', auth, multer, sauceCtrl.createSauce);
+router.post('/', auth, multer, sauceCtrl.createSauce);
 router.put('/:id', auth, multer, sauceCtrl.modifySauce);
 router.delete('/:id', auth, sauceCtrl.deleteSauce);
 

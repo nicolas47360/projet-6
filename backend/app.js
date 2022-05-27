@@ -28,7 +28,7 @@ app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({policy:"cross-origin"}));
 app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'images')))
-app.use('api/sauces', sauceRoutes);
-app.use('api/auth', authRoutes);
+app.use('/api/sauces', sauceRoutes);
+app.use('/api/auth', authRoutes);
 
 module.exports = app;

@@ -6,12 +6,16 @@ exports.createSauce = (req, res, next) =>{
     delete sauceObject._id;
     const sauce = new Sauce({
         ...sauceObject,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        likes: 0,
+        dislikes: 0,
+        usersLiked : [],
+        usersDisliked : [],
     });
     sauce.save()
     .then(() => res.status(201).json({ message: 'la sauce a été enregistrée'}))
     .catch(error => res.status(400).json({error}));
-}
+};
 
 exports.modifySauce = (req, res, next) => {
     const sauceObject = req.file ?
