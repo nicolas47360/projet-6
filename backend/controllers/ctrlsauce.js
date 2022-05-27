@@ -1,8 +1,12 @@
 const Sauce = require('../models/sauce');
+const fs = require('fs');
 
 exports.createSauce = (req, res, next) =>{
+    const sauceObject = JSON.parse(req.body.sauce);
+    delete sauceObject._id;
     const sauce = new Sauce({
-        ...req.body
+        ...sauceObject,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     sauce.save()
     .then(() => res.status(201).json({ message: 'la sauce a été enregistrée'}))
@@ -10,15 +14,28 @@ exports.createSauce = (req, res, next) =>{
 }
 
 exports.modifySauce = (req, res, next) => {
-    Sauce.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id})
+    const sauceObject = req.file ?
+    {
+        ...JSON.parse(req.body.sauce),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : {...req.body}
+    Sauce.updateOne({_id: req.params.id}, {...sauceObject, _id: req.params.id})
     .then(() => res.status(200).json({ message: 'la sauce a été modifiée'}))
     .catch(error => res.status(400).json({error}))
 }
 
 exports.deleteSauce = (req, res, next) => {
-    Sauce.deleteOne({_id: req.params.id})
-    .then(() => res.status(200).json({ message: 'la sauce a été suprrimée'}))
-    .catch(error => res.status(400).json({error}))
+    Sauce.findOne({_id: req.params.id})
+    .then(sauce => {
+        const filename = sauce.imageUrl.split('/images')[1];
+        fs.unlink(`images/${filename}`, () =>{
+            Sauce.deleteOne({_id: req.params.id})
+        .then(() => res.status(200).json({ message: 'la sauce a été suprrimée'}))
+        .catch(error => res.status(400).json({error}))
+        })
+    })
+    .catch( error => res.status(500).json({ error }))
+    
 }
 
 exports.getOneSauce = (req, res, next) => {
@@ -28,7 +45,7 @@ exports.getOneSauce = (req, res, next) => {
 }
 
 exports.getAllSauce = (req, res, next) => {
-    Sauce.find({_id: req.params.id})
+    Sauce.find()
     .then((sauces) => res.status(200).json(sauces))
     .catch()
 }
