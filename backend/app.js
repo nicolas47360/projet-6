@@ -6,7 +6,7 @@ const authRoutes = require('./routes/authroute');
 
 const path = require('path');
 const helmet = require('helmet');
-require('dotenv').config;
+require('dotenv').config();
 
 const app = express();
 
