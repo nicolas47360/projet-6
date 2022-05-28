@@ -43,13 +43,13 @@ exports.deleteSauce = (req, res, next) => {
 }
 
 exports.getOneSauce = (req, res, next) => {
-    Sauce.findOne()
+    Sauce.findOne({_id: req.params.id})
     .then((sauce) => res.status(200).json(sauce))
     .catch(error => res.status(400).json({error}))
 }
 
 exports.getAllSauce = (req, res, next) => {
-    Sauce.find({_id: req.params.id})
+    Sauce.find()
     .then((sauces) => res.status(200).json(sauces))
-    .catch()
+    .catch(error => res.status(400).json({error}))
 }
