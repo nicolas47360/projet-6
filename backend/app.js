@@ -6,11 +6,12 @@ const authRoutes = require('./routes/authroute');
 
 const path = require('path');
 const helmet = require('helmet');
+require('dotenv').config;
 
 const app = express();
 
 
-mongoose.connect('mongodb+srv://nicem:Fc1a9D645eAe@cluster0.go39n.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect(process.env.MONOGO_DB_CONNEXION ,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
