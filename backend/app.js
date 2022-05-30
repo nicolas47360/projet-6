@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const sauceRoutes = require('./routes/sauceroute');
 const authRoutes = require('./routes/authroute');
+const rateLimit = require('./middelware/rate_limit');
 
 const path = require('path');
 const helmet = require('helmet');
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
   });
 
 app.use(helmet());
+app.use(rateLimit);
 app.use(helmet.crossOriginResourcePolicy({policy:"cross-origin"}));
 app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'images')))
