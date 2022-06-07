@@ -1,6 +1,10 @@
 const Joi = require('joi');
 const { default: mongoose } = require('mongoose');
 
+/*
+JOI schema for email and password
+password require minimun 8 characters 1 uppercase Alphabet and maximun 30 charcaters
+*/
 const schema = Joi.object({
     email: Joi.string()
     .email ()
