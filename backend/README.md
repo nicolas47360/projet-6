@@ -12,7 +12,7 @@
     * https://www.mongodb.com/fr-fr/cloud/atlas/efficiency
 
 ## Utilisation:
-* Pour la création d'un compte HOT TAKES veuillez pour le mot de passe rentrer 8 caractéres minimum et une majuscule est obligatoire.
+* Pour la création d'un compte HOT TAKES veuillez pour le mot de passe rentrer 8 caractéres minimum et une majuscule.
 
 ### Frontend:
 * Dans le terminal veuillez vous mettre sur le dossier frontend:
